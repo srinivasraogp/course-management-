@@ -1,6 +1,6 @@
 import React ,{Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import  {Link} from 'react-router-dom';
 import axios from 'axios';
 import courseList from "./courseList.css";
 
@@ -26,7 +26,7 @@ class Courselist extends Component {
 reg=(data)=>{
     const {courselist} = this.state
     console.log(this.state.courselist[0].courseId);
-    this.props.history.push("/reg/" + data);
+    this.props.history.push("/reg/" + data.courseId + "/" + data.courseName);
 }
 componentDidMount() {
     this.getData().then(response => {
@@ -38,7 +38,7 @@ componentDidMount() {
   }
   getData = () => {
     return new Promise((resolve, reject) => {
-      axios.get('http://10.117.189.28:7777/students/ingit/courses').then( (response) =>{
+      axios.get('http://10.117.189.63:7777/students/ingit/courses').then( (response) =>{
         resolve(response);
       }).catch(function (error) {
         reject(error);
@@ -70,7 +70,7 @@ render() {
                      <tr><td>Fee</td><td>{course.fee}</td></tr>
                     
                      </table>
-                     <button onClick={()=>this.reg(course.courseId)} className="bt">Register</button>
+                     <button onClick={()=>this.reg(course)} className="bt">Register</button>
          </div>
      </AccordionItemPanel>
  </AccordionItem>

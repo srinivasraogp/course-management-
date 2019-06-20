@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {withRouter} from "react-router-dom";
 import axios from 'axios';
 import login from './login.css';
+import Register from '../Register/Register'
 import { withTranslation} from 'react-i18next';
+import { createContext } from 'react';
+import Courselist from '../courselist/Courselist';
+export const AppContext = React.createContext();
 
 class Login extends Component {
     constructor(props) {
@@ -27,6 +32,7 @@ class Login extends Component {
     this.getLoginData(loginData).then(response=> {
       console.log(response);
       this.setState({ res: response.data });
+      localStorage.setItem('res', this.state.loginData.studentId);
       if(this.state.res.loginStatus === "login success" && this.state.res.regStatus==="registration not success"){
       alert("Login Successful!")
         this.props.history.push('/list');
@@ -56,6 +62,8 @@ class Login extends Component {
     });
   }
    render() {
+     const{loginData}=this.state;
+     console.log(this.state.loginData.studentId);
     let { t } = this.props;
     return (
       <div className="header  ">
@@ -71,9 +79,12 @@ class Login extends Component {
                   <button className="bu2" type='reset'>{t('reset')}</button>
               </div>
           </form>
+          <AppContext.Provider value={this.state.loginData.studentId}>
+
+          </AppContext.Provider>
       </div>
     )
   }
 }
-export default withTranslation() (Login);
+export default withRouter(withTranslation() (Login));
 

@@ -1,0 +1,21 @@
+.bu{
+    margin-left:1400px;
+    background-color: #ff6200;
+    color:white;
+}
+.sum{
+    margin-left:400px;
+}
+.tab{
+    color:#ff6200;
+    font-size: 20px;
+    font-style: oblique;
+    font-weight:bold;
+}
+.tf{
+    margin-right:1000px;
+}
+.bor{
+    margin-top:50px;
+    border: 5px solid #ff6200;
+}

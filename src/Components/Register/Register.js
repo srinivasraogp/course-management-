@@ -7,15 +7,18 @@ class Register extends Component {
         super(props);
         this.state = {
             registerData: {
-                firstName : "",
-                lastName : "",
-                city : "",
-                gender : "",
-                email : "",
-                contactNumber : ""
-        },
-        id:props.match.params.courseIdParam
-        }
+              courseId:props.match.params.courseIdParam,
+              courseName:props.match.params.courseNameParam,
+              studentId:""
+              
+        }}
+      }
+      componentDidMount(){
+        const {registerData}=this.state;
+        const res = localStorage.getItem('res');
+           registerData['studentId'] = res;
+           console.log(this.state.registerData,'23456');
+        console.log(res,"res")
       }
   RegisterHandler = (event)=>{
     const {registerData}=this.state;
@@ -40,7 +43,7 @@ class Register extends Component {
 
   getLoginData = (registerData) => {
     return new Promise((resolve, reject) => {
-      axios.post('http://10.117.189.137:7777/students/ingit/registration',registerData).then( (response)=> {
+      axios.post('http://10.117.189.63:7777/students/ingit/registration',registerData).then( (response)=> {
         resolve(response); 
         alert("User Registration Successful!");
         this.props.history.push("/summary");       
@@ -50,7 +53,9 @@ class Register extends Component {
     });
   }
    render() {
-       console.log(this.state.id);
+    const res = localStorage.getItem('res');
+     const{registerData}=this.state;
+    console.log(registerData);
     return (
       <div className="header  ">
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -58,35 +63,23 @@ class Register extends Component {
           <h1 align="center" className='head'>Student Register<hr className="hr"/></h1>
           <div className="form-group">
                   <label>Course ID</label>
-                  <input type="text" className="form-control" id="lastName"  placeholder={this.state.id} disabled onChange={this.RegisterHandler}/>
+                  <input type="text" className="form-control" id="courseId"  placeholder={this.state.registerData.courseId} disabled name="courseId"  onChange={this.RegisterHandler}/>
               </div>
               <div className="form-group">
-                  <label>First Name</label>
-                  <input type="text" className="form-control" id="firstName"  placeholder="First Name" name="firstName" onChange={this.RegisterHandler}/>
+                  <label>Course Name</label>
+                  <input type="text" className="form-control" id="courseName"  placeholder={this.state.registerData.courseName} disabled name="courseName"  onChange={this.RegisterHandler}/>
               </div>
               <div className="form-group">
-                  <label>Last Name</label>
-                  <input type="text" className="form-control" id="lastName"  placeholder="Last Name" name="lastName" onChange={this.RegisterHandler}/>
+                  <label>Student ID</label>
+                  <input type="text" className="form-control" id="courseName"  placeholder={res} name="studentId" disabled onChange={this.RegisterHandler}/>
               </div>
               <div className="form-group">
-                  <label>City</label>
-                  <input type="text" className="form-control" id="studentId"  placeholder="City" name="City" onChange={this.RegisterHandler}/>
-              </div>
-              <div className="form-group">
-                  <label>Gender</label>
-                  <input type="text" className="form-control" id="gender"  placeholder="Gender" name="gender" onChange={this.RegisterHandler}/>
-              </div>
-              <div className="form-group">
-                  <label>Email-ID</label>
-                  <input type="email" className="form-control" id="Email-ID"  placeholder="Email-ID" name="email" onChange={this.RegisterHandler}/>
-              </div>
-              <div className="form-group">
-                  <label>Contact Number</label>
-                  <input type="number" className="form-control" id="studentId"  placeholder="Contact Number" name="contactNumber" onChange={this.RegisterHandler}/>
+                  <label>comments</label>
+                  <input type="text" className="form-control" id="courseName"  placeholder="comments" name="comments"  onChange={this.RegisterHandler}/>
               </div>
               <div>
-                  <button className="bu1" onClick={this.register}>Register</button>
-                  <button className="bu2" type='reset'>Reset</button>
+                  <button className="bu1" id="btn1" onClick={this.register}>Register</button>
+                  <button className="bu2" id="btn2" type='reset'>Reset</button>
               </div>
           </form>
       </div>
